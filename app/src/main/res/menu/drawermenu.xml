@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/business" android:title="Business" android:icon="@drawable/ic_business_24dp"/>
+    <item android:id="@+id/event" android:title="Event" android:icon="@drawable/ic_event_24dp"/>
+    <item android:id="@+id/product" android:title="Product" android:icon="@drawable/ic_product_24dp"/>
+    <item android:id="@+id/service" android:title="Service" android:icon="@drawable/ic_service_24dp"/>
+    <item android:id="@+id/profile" android:title="Profile" android:icon="@drawable/ic_profile_24dp"/>
+    <item android:id="@+id/setting" android:title="Setting" android:icon="@drawable/ic_settings_24dp"/>
+    <item android:id="@+id/logout" android:title="Log Out" android:icon="@drawable/ic_logout_24dp"/>
+</menu>
