@@ -14,5 +14,6 @@
     <string name="name">NAME</string>
     <string name="address">ADDRESS</string>
     <string name="phone">PHONE</string>
+    <string name="joinus">Join Us</string>
     <string name="desc">No Joke. Just the Charming Place to be</string>
 </resources>

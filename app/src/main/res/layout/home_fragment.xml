@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/home1"
+                android:maxHeight="130dp" />
+
+            <RelativeLayout
+                android:id="@+id/seclayout"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image1">
+
+                <ImageButton
+                    android:id="@+id/btnimg1"
+                    android:layout_width="190dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button1" />
+
+                <ImageButton
+                    android:id="@+id/btnimg2"
+                    android:layout_width="190dp"
+                    android:layout_height="100dp"
+                    android:layout_toRightOf="@+id/btnimg1"
+                    android:background="@drawable/button2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/thirdlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/seclayout">
+
+                <ImageButton
+                    android:id="@+id/btnimg3"
+                    android:layout_width="190dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/button3" />
+
+
+                <ImageButton
+                    android:id="@+id/btnimg4"
+                    android:layout_width="190dp"
+                    android:layout_height="100dp"
+                    android:layout_toRightOf="@+id/btnimg3"
+                    android:background="@drawable/button4" />
+            </RelativeLayout>
+
+            <ViewFlipper
+                android:id="@+id/viewflipper"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/thirdlayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

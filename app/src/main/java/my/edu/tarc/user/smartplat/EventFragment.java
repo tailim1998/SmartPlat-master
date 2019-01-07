@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,9 @@ public class EventFragment extends Fragment {
     public static final String TAG = "my.edu.tarc.user.smartplat";
     private ListView listView;
     private ProgressDialog pDialog;
+    private SearchView searchView;
     private List<Event> EventList;
+    private EventFragment.EventAdapter adapter;
     private RequestQueue queue;
 
     @Nullable
@@ -45,11 +48,11 @@ public class EventFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.event_fragment,container,false);
-
+        searchView = (SearchView) view.findViewById(R.id.searchViewEvent);
         listView = (ListView)view.findViewById(R.id.eventmenu);
         pDialog = new ProgressDialog(getContext());
         EventList = new ArrayList<>();
-        downloadCourse(getContext(), Constants.URL_SELECTEVENT);
+        downloadEvent(getContext(), Constants.URL_SELECTEVENT);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,10 +68,53 @@ public class EventFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String txt) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String txt) {
+                final List<Event> filtered = new ArrayList<Event>();
+                for(int pos = 0; pos < EventList.size(); pos++) {
+                    if(EventList.get(pos).toString().toLowerCase().contains(txt)){
+                        Event event =
+                                new Event(EventList.get(pos).getTitle(),
+                                        EventList.get(pos).getDescription(),
+                                        EventList.get(pos).getDatetime(),
+                                        EventList.get(pos).getVenue(),
+                                        EventList.get(pos).getFee(),
+                                        EventList.get(pos).getImage());
+                        filtered.add(event);
+                    }
+                    adapter = new EventFragment.EventAdapter(getActivity(), R.layout.event_item_layout, filtered);
+                    listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getActivity(),EventPop.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title",filtered.get(position).getTitle());
+                            bundle.putString("desc",filtered.get(position).getDescription());
+                            bundle.putString("datetime",filtered.get(position).getDatetime());
+                            bundle.putString("venue",filtered.get(position).getVenue());
+                            bundle.putDouble("fee",filtered.get(position).getFee());
+                            bundle.putInt("image",filtered.get(position).getImage());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                return false;
+            }
+        });
         return view;
     }
 
-    private void downloadCourse(Context context, String url) {
+    private void downloadEvent(Context context, String url) {
         // Instantiate the RequestQueue
         queue = Volley.newRequestQueue(context);
 
@@ -119,7 +165,7 @@ public class EventFragment extends Fragment {
     }
 
     private void loadEvent() {
-        final EventAdapter adapter = new EventAdapter(getActivity(), R.layout.event_item_layout, EventList);
+        adapter = new EventAdapter(getActivity(), R.layout.event_item_layout, EventList);
         listView.setAdapter(adapter);
         if(EventList != null){
             int size = EventList.size();

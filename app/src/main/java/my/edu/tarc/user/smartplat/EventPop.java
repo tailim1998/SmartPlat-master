@@ -1,23 +1,25 @@
 package my.edu.tarc.user.smartplat;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.TooltipCompat;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 public class EventPop extends AppCompatActivity {
     ImageView image;
     TextView textViewTitle, textViewDesc, textViewDateTime, textViewVenue, textViewFee;
+    Button JoinButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class EventPop extends AppCompatActivity {
         textViewVenue = findViewById(R.id.venue);
         textViewFee = findViewById(R.id.fee);
 
+        JoinButton=findViewById(R.id.button);
+
         Bundle bundle = getIntent().getExtras();
         textViewTitle.setText(bundle.getString("title"));
         textViewDesc.setText(bundle.getString("desc"));
@@ -39,14 +43,16 @@ public class EventPop extends AppCompatActivity {
         textViewFee.setText("Price: RM " + String.format("%.2f",bundle.getDouble("fee")));
         image.setImageResource(bundle.getInt("image"));
 
-
-
-        Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.drawable.event1
-        );
-        RoundedBitmapDrawable roundedBitmapDrawable =RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        image.setImageDrawable(roundedBitmapDrawable);
-
+        JoinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommentFragment commentFragment = new CommentFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, commentFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);

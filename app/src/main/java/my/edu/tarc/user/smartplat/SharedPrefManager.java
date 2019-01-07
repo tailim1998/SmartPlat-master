@@ -64,6 +64,25 @@ public class SharedPrefManager {
         return true;
     }
 
+    public void refresh(){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_USER_ID, KEY_USER_ID);
+        editor.putString(KEY_USERNAME, getUsername());
+        editor.putString(KEY_USER_NAME, getName());
+        editor.putString(KEY_USEREMAIL, getUserEmail());
+        editor.putString(KEY_USERCONTACT, getUserContact());
+        editor.putString(KEY_USERADDRESS, getUserContact());
+        editor.apply();
+    }
+
+    public void setUsername(String name){
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_USERNAME, name);
+        editor.apply();
+    }
+
     public String getUsername(){
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null);

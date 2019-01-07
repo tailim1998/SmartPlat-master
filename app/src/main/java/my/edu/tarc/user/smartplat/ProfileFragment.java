@@ -29,13 +29,14 @@ import java.util.Map;
 
 public class ProfileFragment extends Fragment {
     private View view;
-    static private TextView textViewUser, textViewName, textViewContact, textViewEmail, textViewAddress;
+    static private TextView textViewUser, textViewName, textViewContact, textViewEmail, textViewAddress, Email;
     private ImageButton btnName, btnEmail, btnContact, btnAddress;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        displayProfile();
+
+
         view = inflater.inflate(R.layout.profile_fragment, container, false);
         textViewUser = (TextView) view.findViewById(R.id.tv_Username);
         textViewName = (TextView) view.findViewById(R.id.tv_Name);
@@ -53,6 +54,8 @@ public class ProfileFragment extends Fragment {
         textViewName.setText(SharedPrefManager.getInstance(getContext()).getName());
         textViewContact.setText(SharedPrefManager.getInstance(getContext()).getUserContact());
         textViewAddress.setText(SharedPrefManager.getInstance(getContext()).getUserAddress());
+
+        displayProfile();
 
         btnName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +75,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 updateEmail();
-                View view = inflater.inflate(R.layout.header, container,false);
-                TextView Email = view.findViewById(R.id.textViewEmail);
-                System.out.println("..." + Email.getText().toString().trim() + "...");
-                Email.setText(textViewEmail.getText().toString().trim());
             }
         });
 
@@ -103,6 +102,11 @@ public class ProfileFragment extends Fragment {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 if (!jsonObject.getBoolean("error")) {
+                                    textViewUser.setText(SharedPrefManager.getInstance(getContext()).getUsername());
+                                    textViewEmail.setText(SharedPrefManager.getInstance(getContext()).getUserEmail());
+                                    textViewName.setText(jsonObject.getString("name"));
+                                    textViewContact.setText(jsonObject.getString("contact"));
+                                    textViewAddress.setText(jsonObject.getString("address"));
                                     SharedPrefManager.getInstance(getContext())
                                             .userProfile(jsonObject.getInt("id"),
                                                     jsonObject.getString("name"),
@@ -259,6 +263,7 @@ public class ProfileFragment extends Fragment {
                                 if (!jsonObject.getBoolean("error")) {
                                     SharedPrefManager.getInstance(getContext())
                                             .setUserEmail(jsonObject.getString("email"));
+                                    MainActivity.textViewEmail.setText(jsonObject.getString("email"));
                                     Toast.makeText(getContext(),
                                             jsonObject.getString("message"),
                                             Toast.LENGTH_LONG).show();

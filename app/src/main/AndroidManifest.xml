@@ -25,6 +25,9 @@
         <activity android:name=".RegisterActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".EventPop"/>
+        <activity android:name=".ServicePop"/>
+        <activity android:name=".BusinessPop"/>
+        <activity android:name=".ProductPop"/>
     </application>
 
 </manifest>

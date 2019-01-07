@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/business" android:title="Business" android:icon="@drawable/ic_business_24dp"/>
-    <item android:id="@+id/event" android:title="Event" android:icon="@drawable/ic_event_24dp"/>
-    <item android:id="@+id/product" android:title="Product" android:icon="@drawable/ic_product_24dp"/>
-    <item android:id="@+id/service" android:title="Service" android:icon="@drawable/ic_service_24dp"/>
-    <item android:id="@+id/profile" android:title="Profile" android:icon="@drawable/ic_profile_24dp"/>
-    <item android:id="@+id/setting" android:title="Setting" android:icon="@drawable/ic_settings_24dp"/>
-    <item android:id="@+id/logout" android:title="Log Out" android:icon="@drawable/ic_logout_24dp"/>
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_24dp"
+        android:title="Home" />
+    <item
+        android:id="@+id/business"
+        android:icon="@drawable/ic_business_24dp"
+        android:title="Business" />
+    <item
+        android:id="@+id/event"
+        android:icon="@drawable/ic_event_24dp"
+        android:title="Event" />
+    <item
+        android:id="@+id/product"
+        android:icon="@drawable/ic_product_24dp"
+        android:title="Product" />
+    <item
+        android:id="@+id/service"
+        android:icon="@drawable/ic_service_24dp"
+        android:title="Service" />
+    <item android:title="General">
+        <menu>
+            <item
+                android:id="@+id/profile"
+                android:icon="@drawable/ic_profile_24dp"
+                android:title="Profile" />
+            <item
+                android:id="@+id/setting"
+                android:icon="@drawable/ic_settings_24dp"
+                android:title="Setting" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_logout_24dp"
+                android:title="Log Out" />
+        </menu>
+    </item>
 </menu>

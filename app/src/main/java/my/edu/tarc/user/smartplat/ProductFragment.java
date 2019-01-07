@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,16 +37,22 @@ import java.util.List;
 
 public class ProductFragment extends Fragment {
     public static final String TAG = "my.edu.tarc.user.smartplat";
+    private SearchView searchView;
     private ListView listView;
     private ProgressDialog pDialog;
     private List<Product> ProductList;
     private RequestQueue queue;
+    private ProductFragment.ProductAdapter adapter;
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.product_fragment,container,false);
+        setHasOptionsMenu(true);
+        searchView = (SearchView) view.findViewById(R.id.searchViewProduct);
 
         listView = (ListView)view.findViewById(R.id.productmenu);
         pDialog = new ProgressDialog(getContext());
@@ -61,7 +72,51 @@ public class ProductFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        searchView.setQueryHint("Search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String txt) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String txt) {
+                final List<Product> filtered = new ArrayList<Product>();
+                for(int pos = 0; pos < ProductList.size(); pos++) {
+                    if(ProductList.get(pos).getTitle().toLowerCase().contains(txt)){
+                        Product product =
+                                new Product(ProductList.get(pos).getTitle(),
+                                        ProductList.get(pos).getDescription(),
+                                        ProductList.get(pos).getPrice(),
+                                        ProductList.get(pos).getLocation(),
+                                        ProductList.get(pos).getImage());
+                        filtered.add(product);
+                    }
+                    adapter = new ProductFragment.ProductAdapter(getActivity(), R.layout.product_item_layout, filtered);
+                    listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent intent = new Intent(getActivity(), ProductPop.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("title", filtered.get(position).getTitle());
+                            bundle.putString("desc", filtered.get(position).getDescription());
+                            bundle.putDouble("price", filtered.get(position).getPrice());
+                            bundle.putString("location", filtered.get(position).getLocation());
+                            bundle.putInt("image", filtered.get(position).getImage());
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                return false;
+            }
+        });
         return view;
+
+
+
     }
 
     private void downloadCourse(Context context, String url) {
@@ -128,24 +183,32 @@ public class ProductFragment extends Fragment {
 
     class ProductAdapter extends ArrayAdapter<Product> {
 
-        private ProductAdapter(Activity context, int resource, List<Product> list){
-            super(context,resource,list);
+        private ProductAdapter(Activity context, int resource, List<Product> list) {
+            super(context, resource, list);
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup){
+        public View getView(int i, View view, ViewGroup viewGroup) {
             Product product = getItem(i);
-            view =  getLayoutInflater().inflate(R.layout.event_item_layout, viewGroup,false);
+            view = getLayoutInflater().inflate(R.layout.product_item_layout, viewGroup, false);
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.imageViewEvent);
-            TextView textViewTitle = (TextView)view.findViewById(R.id.tv_title);
-            TextView textViewDesc = (TextView)view.findViewById(R.id.tv_description);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageViewProduct);
+            TextView textViewTitle = (TextView) view.findViewById(R.id.tv_title_product);
+            TextView textViewDesc = (TextView) view.findViewById(R.id.tv_description_product);
 
             imageView.setImageResource(product.getImage());
+
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), product.getImage());
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+            roundedBitmapDrawable.setCircular(true);
+            imageView.setImageDrawable(roundedBitmapDrawable);
+
             textViewTitle.setText(product.getTitle());
             textViewDesc.setText(product.getDescription());
 
             return view;
         }
     }
+
+
 }

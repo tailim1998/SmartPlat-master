@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ListView
+        android:id="@+id/commentmenu"
+        android:layout_below="@id/searchViewEvent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/darkgray"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/addComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="111"
+            android:layout_alignParentBottom="true"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:cursorVisible="true"
+            android:layout_marginRight="100dp"
+            android:focusableInTouchMode="true"
+            android:enabled="true"
+            android:inputType="text"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corner"
+            />
+        <Button
+            android:id="@+id/commentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="comment"
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="7dp"
+            android:background="@drawable/rounded_corner"/>
+
+    </RelativeLayout>
+</RelativeLayout>

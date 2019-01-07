@@ -22,7 +22,7 @@ public class BusinessPop extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_pop);
+        setContentView(R.layout.business_pop);
 
 
         image = findViewById(R.id.image);
@@ -40,27 +40,11 @@ public class BusinessPop extends AppCompatActivity {
         image.setImageResource(bundle.getInt("image"));
 
 
-
-        Bitmap bitmap=BitmapFactory.decodeResource(getResources(),R.id.imageViewBusiness);
-        RoundedBitmapDrawable roundedBitmapDrawable =RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-        roundedBitmapDrawable.setCircular(true);
-        image.setImageDrawable(roundedBitmapDrawable);
-
-
-
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
         getWindow().setLayout((int)(width*.8), (int)(height*.8));
-
-        image.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                image.setColorFilter(Color.RED);
-                return false;
-            }
-        });
     }
 }
